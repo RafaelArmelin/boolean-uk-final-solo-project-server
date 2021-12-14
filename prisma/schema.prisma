@@ -12,8 +12,33 @@ datasource db {
 }
 
 model User {
+  id             Int              @id @default(autoincrement())
+  name           String           @db.VarChar(255)
+  email          String           @unique
+  password       String
+  userOnBookings userOnBookings[]
+}
+
+model Booking {
+  id             Int              @id @default(autoincrement())
+  description    String           @db.VarChar(255)
+  dateAndTime    DateTime
+  pinterestBoard String
+  userOnBookings userOnBookings[]
+}
+
+model userOnBookings {
+  userId    Int
+  user      User    @relation(fields: [userId], references: [id])
+  bookingId Int
+  booking   Booking @relation(fields: [bookingId], references: [id])
+
+  @@id([userId, bookingId])
+}
+
+model Artist {
   id       Int    @id @default(autoincrement())
   name     String @db.VarChar(255)
-  email    String @unique
-  password String
+  location String @db.VarChar(255)
+  imageUrl String
 }
