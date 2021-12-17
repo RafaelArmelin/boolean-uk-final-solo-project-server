@@ -1,9 +1,13 @@
 const express = require("express");
 
-const { createArtist } = require("./controller");
+const { createArtist, getAllArtists, getArtistById } = require("./controller");
 
 const router = express.Router();
 
-router.post("/artists/create", createArtist);
+router.get("/", getAllArtists);
+
+router.get("/:id", getArtistById);
+
+router.post("/", createArtist);
 
 module.exports = router;

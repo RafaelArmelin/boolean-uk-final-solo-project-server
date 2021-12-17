@@ -5,6 +5,7 @@ const { createBooking, getAllBookings } = require("./controller");
 const router = express.Router();
 
 router.post("/", createBooking);
-router.get("/booking", getAllBookings);
+
+router.get("/", getAllBookings);
 
 module.exports = router;

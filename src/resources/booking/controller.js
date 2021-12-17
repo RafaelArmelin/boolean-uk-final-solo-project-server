@@ -3,21 +3,17 @@ const prisma = require("../../utils/database");
 const createBooking = async (req, res) => {
   const data = req.body;
 
-  const { name, email } = user;
-  const { user, description, dateAndTime, pinterestBoard } = data;
+  // const { name, email } = user;
+  const { name, email, description, dateAndTime, pinterestBoard } = data;
 
   try {
     const result = await prisma.booking.create({
       data: {
-        user: {
-          create: { name, email },
-        },
+        name,
+        email,
         description,
         dateAndTime,
         pinterestBoard,
-      },
-      include: {
-        user: true,
       },
     });
 

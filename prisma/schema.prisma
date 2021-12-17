@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -12,33 +9,49 @@ datasource db {
 }
 
 model User {
-  id             Int              @id @default(autoincrement())
-  name           String           @db.VarChar(255)
-  email          String           @unique
-  password       String
-  userOnBookings userOnBookings[]
+  id            Int            @id @default(autoincrement())
+  name          String         @db.VarChar(255)
+  email         String         @unique
+  password      String
+  role          Role           @default(CUSTOMER)
+  artistProfile ArtistProfile?
+  bookings      Booking[]
+}
+
+enum Role {
+  CUSTOMER
+  ARTIST
+}
+
+model ArtistProfile {
+  id       Int     @id @default(autoincrement())
+  location String  @db.VarChar(255)
+  imageUrl String
+  about    String? @db.VarChar(255)
+  artistId Int
+  artist   User    @relation(fields: [artistId], references: [id])
 }
 
 model Booking {
-  id             Int              @id @default(autoincrement())
-  description    String           @db.VarChar(255)
+  id             Int      @id @default(autoincrement())
+  description    String   @db.VarChar(255)
   dateAndTime    DateTime
   pinterestBoard String
-  userOnBookings userOnBookings[]
+  users          User[]
 }
 
-model userOnBookings {
-  userId    Int
-  user      User    @relation(fields: [userId], references: [id])
-  bookingId Int
-  booking   Booking @relation(fields: [bookingId], references: [id])
+// model UsersOnBookings {
+//   userId    Int
+//   user      User    @relation(fields: [userId], references: [id])
+//   bookingId Int
+//   booking   Booking @relation(fields: [bookingId], references: [id])
 
-  @@id([userId, bookingId])
-}
+//   @@id([userId, bookingId])
+// }
 
-model Artist {
-  id       Int    @id @default(autoincrement())
-  name     String @db.VarChar(255)
-  location String @db.VarChar(255)
-  imageUrl String
-}
+// Artist: Rafael => id: 1
+// Customer: Steven => id: 2
+
+// ID | BookingId | userId
+// 1  |     1     |     1
+// 2  |     1     |     2
