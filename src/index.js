@@ -25,9 +25,9 @@ app.use("/auth", authRouter);
 app.use("/bookings", bookingsRouter);
 app.use("/artists", artistsRouter);
 
-// app.get("*", (req, res) => {
-//   res.json({ ok: true });
-// });
+app.get("*", (req, res) => {
+  res.json({ ok: true });
+});
 
 /* START SERVER */
 
