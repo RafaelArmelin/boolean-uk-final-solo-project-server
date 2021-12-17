@@ -5,6 +5,8 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 const authRouter = require("./resources/authentication/router");
+const bookingsRouter = require("./resources/booking/router");
+const artistsRouter = require("./resources/artist/router");
 
 const app = express();
 
@@ -20,10 +22,12 @@ app.use(morgan("dev"));
 /* SETUP ROUTES */
 
 app.use("/auth", authRouter);
+app.use("/bookings", bookingsRouter);
+app.use("/artists", artistsRouter);
 
-app.get("*", (req, res) => {
-  res.json({ ok: true });
-});
+// app.get("*", (req, res) => {
+//   res.json({ ok: true });
+// });
 
 /* START SERVER */
 
